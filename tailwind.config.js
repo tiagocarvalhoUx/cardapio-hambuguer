@@ -1,17 +1,15 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ["./**/*.{html,js}"],
+export default {
+  content: ['./index.html', './src/**/*.{vue,js,ts}'],
   theme: {
-    fontFamily:{
-      'sans': ['Poppins', 'sans-serif']
+    fontFamily: {
+      sans: ['Poppins', 'sans-serif'],
     },
     extend: {
-      backgroundImage:{
-        "home": "url('/assets/bg.png')"
-      }
+      backgroundImage: {
+        home: "url('/assets/bg.png')",
+      },
     },
   },
   plugins: [],
 }
-
-
