@@ -2,6 +2,7 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { asset } from '@/utils/asset'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -268,7 +269,7 @@ onUnmounted(() => {
         <div class="bs-scaler">
           <div class="bs-stage">
             <div class="bs-prop bs-plate" style="bottom: 60px; width: 470px; left: 50%">
-              <img src="/assets/burger/prato.png" alt="" aria-hidden="true" />
+              <img :src="asset('/assets/burger/prato.png')" alt="" aria-hidden="true" />
             </div>
 
             <div
@@ -278,16 +279,16 @@ onUnmounted(() => {
               :style="{ bottom: camada.bottom + 'px', width: camada.width + 'px' }"
             >
               <img
-                :src="'/assets/burger/' + camada.arquivo + '.png'"
+                :src="asset('/assets/burger/' + camada.arquivo + '.png')"
                 :alt="camada.nome + ' — ' + camada.descricao"
               />
             </div>
 
             <div class="bs-prop bs-fries" style="bottom: 84px; width: 190px; left: calc(50% + 232px)">
-              <img src="/assets/burger/batata.png" alt="Porção de batata frita" />
+              <img :src="asset('/assets/burger/batata.png')" alt="Porção de batata frita" />
             </div>
             <div class="bs-prop bs-juice" style="bottom: 70px; width: 140px; left: calc(50% - 232px)">
-              <img src="/assets/burger/suco.png" alt="Copo de suco" />
+              <img :src="asset('/assets/burger/suco.png')" alt="Copo de suco" />
             </div>
 
             <canvas ref="smokeCanvas" class="bs-smoke" width="720" height="780"></canvas>

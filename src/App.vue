@@ -6,9 +6,11 @@ import BurgerScrollytelling from '@/components/BurgerScrollytelling.vue'
 import { useCart } from '@/composables/useCart'
 import { useRestaurantOpen } from '@/composables/useRestaurantOpen'
 import { burgers, drinks, type Product } from '@/data/menu'
+import { asset } from '@/utils/asset'
 
 const { count, addToCart } = useCart()
 const { isOpen, horario } = useRestaurantOpen()
+const bgHome = { backgroundImage: `url(${asset('/assets/bg.png')})` }
 
 const cartOpen = ref(false)
 const menuRef = ref<HTMLElement | null>(null)
@@ -24,10 +26,10 @@ function scrollToMenu() {
 
 <template>
   <!--HEADER-->
-  <header class="w-full h-[420px] bg-zinc-900 bg-home bg-cover bg-center">
+  <header class="w-full h-[420px] bg-zinc-900 bg-cover bg-center" :style="bgHome">
     <div class="w-full h-full flex flex-col justify-center items-center">
       <img
-        src="/assets/hamb-1.png"
+        :src="asset('/assets/hamb-1.png')"
         alt="Ofertas Burguer"
         class="w-32 h-32 rounded-full shadow-lg hover:scale-110 duration-200"
       />
