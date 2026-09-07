@@ -58,11 +58,11 @@ function checkout() {
 <template>
   <div
     v-if="open"
-    class="bg-black/60 w-full h-full fixed top-0 left-0 z-[99] flex items-center justify-center"
+    class="bg-black/75 backdrop-blur-sm w-full h-full fixed top-0 left-0 z-[99] flex items-center justify-center p-4"
     @click.self="emit('close')"
   >
-    <div class="bg-white p-5 rounded-md min-w-[90%] md:min-w-[600px]">
-      <h2 class="text-center font-bold text-2xl mb-2">Meu Carrinho</h2>
+    <div class="bg-[#fffaf0] text-[#181713] p-7 rounded-sm w-full max-w-[600px] border border-[#e8dfcf] shadow-2xl">
+      <div class="flex items-start justify-between mb-6"><div><p class="text-[#e95a2c] text-[10px] font-bold tracking-[.18em] mb-2">SEU PEDIDO</p><h2 class="font-['Barlow_Condensed'] uppercase font-black text-4xl leading-none">Meu carrinho</h2></div><button class="text-[#746c5e]" aria-label="Fechar carrinho" @click="emit('close')"><i class="fa-solid fa-xmark text-xl"></i></button></div>
 
       <div class="flex justify-between mb-2 flex-col">
         <div
@@ -74,7 +74,7 @@ function checkout() {
             <div>
               <p class="font-medium">{{ item.name }}</p>
               <p class="mt-2">Qtd: {{ item.quantity }}</p>
-              <p class="font-medium mt-2">R$ {{ item.price.toFixed(2) }}</p>
+              <p class="font-medium mt-2">R$ {{ item.price.toFixed(2).replace('.', ',') }}</p>
             </div>
 
             <button class="remove-from-cart-btn" @click="removeFromCart(item.name)">
@@ -84,14 +84,14 @@ function checkout() {
         </div>
       </div>
 
-      <p class="font-bold">Total: <span>{{ totalFormatado }}</span></p>
+      <p class="font-bold border-t border-[#e8dfcf] pt-4">Total: <span>{{ totalFormatado }}</span></p>
 
       <p class="font-bold mt-4">Endereço de entrega</p>
       <input
         v-model="address"
         type="text"
         placeholder="Digite seu endereço completo..."
-        class="w-full border-2 p-1 rounded my-1"
+        class="w-full border border-[#d8cdbb] bg-white p-3 rounded-sm my-2 outline-none focus:border-[#e95a2c]"
         :class="{ 'border-red-500': addressWarn }"
         @input="onAddressInput"
       />
@@ -99,7 +99,7 @@ function checkout() {
 
       <div class="flex items-center justify-between mt-5 w-full">
         <button class="font-medium" @click="emit('close')">Fechar</button>
-        <button class="bg-green-500 text-white px-4 py-1 rounded" @click="checkout">
+        <button class="bg-[#f15b2a] text-[#181713] font-bold px-5 py-3 rounded-full" @click="checkout">
           Finalizar Pedido
         </button>
       </div>

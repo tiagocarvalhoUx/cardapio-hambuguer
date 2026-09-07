@@ -313,17 +313,15 @@ onUnmounted(() => {
 </template>
 
 <style>
-/* Prefixado com .bs- para não conflitar com as classes do Tailwind.
-   Paleta igual à do resto do site: red-500 (footer/hover), gray-900
-   (botões, header bg-zinc-900), gray-200 e o fundo #f6f7f8 do body. */
+/* Paleta compartilhada com o redesign: carvão, creme e laranja queimado. */
 :root {
-  --bs-primary: #ef4444;
-  --bs-accent: #6b7280;
-  --bs-accent-b: #111827;
-  --bs-bg: #f6f7f8;
-  --bs-bg-2: #e5e7eb;
-  --bs-fg: #111827;
-  --bs-border: #e5e7eb;
+  --bs-primary: #f15b2a;
+  --bs-accent: #c6bba8;
+  --bs-accent-b: #181713;
+  --bs-bg: #181713;
+  --bs-bg-2: #2a2119;
+  --bs-fg: #fff9ec;
+  --bs-border: rgba(255, 249, 236, 0.2);
   --bs-s: 1;
 }
 
@@ -344,21 +342,24 @@ onUnmounted(() => {
 /* seção da montagem */
 .bs-assembly {
   position: relative;
-  background: linear-gradient(180deg, var(--bs-bg), var(--bs-bg-2));
+  min-height: 100vh;
+  background: var(--bs-bg);
 }
 .bs-scene {
   height: 100vh;
   position: relative;
   overflow: hidden;
-  display: grid;
-  place-items: center;
+  background:
+    radial-gradient(circle at 50% 54%, rgba(241, 91, 42, 0.13), transparent 31%),
+    radial-gradient(circle at 0% 100%, rgba(119, 72, 34, 0.20), transparent 45%),
+    linear-gradient(135deg, #181713 0%, #211a15 52%, #181713 100%);
 }
 .bs-glow {
   position: absolute;
   width: min(86vw, 760px);
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(217, 160, 41, 0.28), transparent 62%);
+  background: radial-gradient(circle, rgba(241, 91, 42, 0.24), transparent 62%);
 }
 
 .bs-stitle {
@@ -389,8 +390,14 @@ onUnmounted(() => {
 
 /* palco das camadas */
 .bs-scaler {
+  /* Centraliza via left/top + translate (imune ao "safe centering" do
+     CSS Grid, que empurraria a caixa de 720px pra esquerda em telas
+     menores em vez de centralizar de verdade). */
+  position: absolute;
+  left: 50%;
+  top: 50%;
   transform-origin: center center;
-  transform: scale(var(--bs-s, 1));
+  transform: translate(-50%, -50%) scale(var(--bs-s, 1));
 }
 .bs-stage {
   position: relative;
@@ -467,13 +474,13 @@ onUnmounted(() => {
 .bs-cta {
   padding: 80px 24px 60px;
   text-align: center;
-  background: linear-gradient(180deg, var(--bs-bg-2), var(--bs-bg));
+  background: linear-gradient(180deg, #211a15, #181713);
 }
 .bs-cta h2 {
   font-size: clamp(1.8rem, 5vw, 3rem);
   font-weight: 700;
   margin: 0;
-  color: var(--bs-fg);
+  color: #fff9ec;
 }
 .bs-cta h2 .bs-a {
   color: var(--bs-primary);
@@ -481,20 +488,20 @@ onUnmounted(() => {
 .bs-cta p {
   max-width: 34rem;
   margin: 16px auto 28px;
-  color: #57534e;
+  color: #c6bba8;
   font-size: 1.05rem;
 }
 .bs-btn {
   cursor: pointer;
   background: var(--bs-primary);
-  color: #fff;
+  color: #181713;
   border: none;
   border-radius: 999px;
   font-family: inherit;
   font-weight: 700;
   font-size: 1.05rem;
   padding: 16px 38px;
-  box-shadow: 0 14px 30px -8px rgba(239, 68, 68, 0.6);
+  box-shadow: 0 14px 30px -8px rgba(241, 91, 42, 0.55);
   transition: transform 0.2s;
 }
 .bs-btn:hover {

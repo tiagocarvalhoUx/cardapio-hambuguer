@@ -3,93 +3,29 @@ import { ref } from 'vue'
 import ProductCard from '@/components/ProductCard.vue'
 import CartModal from '@/components/CartModal.vue'
 import BurgerScrollytelling from '@/components/BurgerScrollytelling.vue'
+import SmokeCursor from '@/components/SmokeCursor.vue'
 import { useCart } from '@/composables/useCart'
 import { useRestaurantOpen } from '@/composables/useRestaurantOpen'
 import { burgers, drinks, type Product } from '@/data/menu'
-import { asset } from '@/utils/asset'
-
-const { count, addToCart } = useCart()
-const { isOpen, horario } = useRestaurantOpen()
-const bgHome = { backgroundImage: `url(${asset('/assets/bg.png')})` }
-
-const cartOpen = ref(false)
-const menuRef = ref<HTMLElement | null>(null)
-
-function onAdd(product: Product) {
-  addToCart(product)
-}
-
-function scrollToMenu() {
-  menuRef.value?.scrollIntoView({ behavior: 'smooth' })
-}
+const { count, addToCart } = useCart(); const { isOpen, horario } = useRestaurantOpen()
+const cartOpen = ref(false); const menuRef = ref<HTMLElement | null>(null)
+function scrollToMenu() { menuRef.value?.scrollIntoView({ behavior: 'smooth' }) }; function onAdd(product: Product) { addToCart(product) }
 </script>
-
 <template>
-  <!--HEADER-->
-  <header class="w-full h-[420px] bg-zinc-900 bg-cover bg-center" :style="bgHome">
-    <div class="w-full h-full flex flex-col justify-center items-center">
-      <img
-        :src="asset('/assets/hamb-1.png')"
-        alt="Ofertas Burguer"
-        class="w-32 h-32 rounded-full shadow-lg hover:scale-110 duration-200"
-      />
-      <h1 class="text-4xl md:text-5xl font-bold text-center mt-4 mb-2 text-white">
-        Ofertas Burguer
-      </h1>
-      <span class="text-white font-medium"> Rua Av. Paulista 542, Nova York Araçatuba-SP</span>
-
-      <div
-        class="px-4 py-1 rounded-lg mt-5"
-        :class="isOpen ? 'bg-green-600' : 'bg-red-500'"
-      >
-        <span class="text-white font-medium">{{ horario }}</span>
-      </div>
-    </div>
-  </header>
-  <!--FIM HEADER-->
-
-  <!--Montagem do hambúrguer (scrollytelling GSAP)-->
-  <BurgerScrollytelling @cta-click="scrollToMenu" />
-
-  <h2 ref="menuRef" class="text-2xl md:text-3xl font-bold text-center mt-9 mb-6">
-    Conheça Nosso menu
-  </h2>
-
-  <!--Ínicio Menu-->
-  <div>
-    <main class="grid grid-cols-1 md:grid-cols-2 gap-7 md:gap-10 mx-auto max-w-7xl px-2 mb-16">
-      <ProductCard v-for="burger in burgers" :key="burger.name" :product="burger" @add="onAdd" />
-    </main>
-
-    <div class="mx-auto max-w-7xl px-2 my-2">
-      <h2 class="text-2xl md:text-3xl font-bold text-center mt-9 mb-6">Bebidas</h2>
-    </div>
-
-    <!--Grid Bebidas-->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-7 md:gap-10 mx-auto max-w-7xl px-2 mb-16">
-      <ProductCard
-        v-for="drink in drinks"
-        :key="drink.name"
-        :product="drink"
-        full-width
-        @add="onAdd"
-      />
-    </div>
-    <!--Fim Grid Bebidas-->
+  <div class="site-shell">
+    <SmokeCursor />
+    <header id="top" class="hero">
+      <nav class="topbar" aria-label="Navegação principal">
+        <a class="brand" href="#top" aria-label="Ofertas Burger, início"><span>O</span>FERTAS<br />BURGER</a>
+        <div class="topbar-info"><i class="fa-solid fa-location-dot"></i> Araçatuba, SP</div>
+        <button class="cart-pill" type="button" @click="cartOpen = true" aria-label="Abrir carrinho"><i class="fa-solid fa-bag-shopping"></i><b>{{ count }}</b><span>Meu pedido</span></button>
+      </nav>
+      <div class="hero-content"><p class="eyebrow">SMASHED DAILY · DESDE 2024</p><h1>O burger que<br /><em>vale a fome.</em></h1><p class="hero-copy">Blend na chapa, brioche dourado e ingredientes sem atalhos. Seu novo vício começa aqui.</p><div class="hero-actions"><button class="button button-primary" type="button" @click="scrollToMenu">Pedir agora <i class="fa-solid fa-arrow-down"></i></button><a class="button button-ghost" href="https://www.google.com/maps/search/?api=1&query=Av.+Paulista+542+Ara%C3%A7atuba+SP" target="_blank" rel="noreferrer"><i class="fa-solid fa-location-arrow"></i> Como chegar</a></div></div>
+      <div class="open-status" :class="{ closed: !isOpen }"><span></span><b>{{ isOpen ? 'Aberto agora' : 'Fechado agora' }}</b> · {{ horario }}</div><div class="hero-stamp" aria-hidden="true"><span>100%<br />SABOR</span></div>
+    </header>
+    <BurgerScrollytelling @cta-click="scrollToMenu" />
+    <main ref="menuRef" class="menu-section"><div class="section-intro"><div><p class="eyebrow">O ESSENCIAL</p><h2>Feitos pra<br /><em>devorar.</em></h2></div><p>Escolha seu favorito. Todos acompanham nosso molho secreto e aquele smash com casquinha inesquecível.</p></div><div class="menu-grid"><ProductCard v-for="burger in burgers" :key="burger.name" :product="burger" @add="onAdd" /></div><div class="drinks-heading"><p class="eyebrow">PRA ACOMPANHAR</p><h2>Geladas <em>no ponto.</em></h2></div><div class="drink-grid"><ProductCard v-for="drink in drinks" :key="drink.name" :product="drink" @add="onAdd" /></div></main>
+    <section class="visit-section"><p class="eyebrow">A SUA MESA ESTÁ AQUI</p><h2>Chega mais.<br /><em>A chapa tá quente.</em></h2><p>Av. Paulista, 542 · Nova York<br />Araçatuba — SP</p></section>
+    <CartModal :open="cartOpen" @close="cartOpen = false" /><button v-if="count" class="floating-cart" type="button" @click="cartOpen = true"><i class="fa-solid fa-bag-shopping"></i> Ver pedido <b>{{ count }}</b></button>
   </div>
-  <!--Fim Menu-->
-
-  <!--MODAL CART-->
-  <CartModal :open="cartOpen" @close="cartOpen = false" />
-  <!--Fim MODAL CART-->
-
-  <!--BUTTON CART FOOTER-->
-  <footer class="w-full bg-red-500 py-2 fixed bottom-0 z-40 flex items-center justify-center">
-    <button class="flex items-center gap-2 text-white font-bold" @click="cartOpen = true">
-      ({{ count }})
-      Veja meu carrinho
-      <i class="fa fas fa-cart-plus text-lg text-white"></i>
-    </button>
-  </footer>
-  <!--FIM BUTTON CART FOOTER-->
 </template>
