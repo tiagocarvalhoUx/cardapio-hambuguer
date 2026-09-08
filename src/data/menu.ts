@@ -17,7 +17,7 @@ export const burgers: Product[] = [
 export const drinks: Product[] = [
   { name: 'Coca-Cola Lata', tag: 'REFRIGERANTE', price: 6, category: 'drink', image: photo('photo-1554866585-cd94860890b7'), description: '350 ml, bem gelada.' },
   { name: 'Guaraná Antarctica', tag: 'REFRIGERANTE', price: 6, category: 'drink', image: 'https://cdn.jsdelivr.net/gh/tiagocarvalhoUx/cardapio-hambuguer@master/public/assets/refri-2.webp', description: '350 ml, bem gelado.' },
-  { name: 'Coca-Cola Zero', tag: 'REFRIGERANTE', price: 6, category: 'drink', image: photo('photo-1554866585-cd94860890b7'), description: '350 ml, sem açúcar e bem gelada.' },
+  { name: 'Coca-Cola Zero', tag: 'REFRIGERANTE', price: 6, category: 'drink', image: local('coca-zero.webp'), description: '350 ml, sem açúcar e bem gelada.' },
   { name: 'H2OH! Limão', tag: 'REFRIGERANTE', price: 7, category: 'drink', image: local('h2o.webp'), description: '500 ml, leve e refrescante.' },
   { name: 'Suco de Laranja', tag: 'NATURAL', price: 10, category: 'drink', image: photo('photo-1613478223719-2ab802602423'), description: '300 ml, preparado na hora.' },
   { name: 'Suco de Maracujá', tag: 'NATURAL', price: 10, category: 'drink', image: local('suco-maracuja.webp'), description: '300 ml, cremoso e refrescante.' },
