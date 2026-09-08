@@ -17,7 +17,10 @@ onUnmounted(() => cleanup())
 <template><canvas ref="canvas" class="smoke-cursor" aria-hidden="true" /><div ref="dot" class="cursor-dot" aria-hidden="true"></div></template>
 <style scoped>
 .smoke-cursor{position:fixed;inset:0;z-index:90;width:100%;height:100%;pointer-events:none}
-.cursor-dot{--x:-100px;--y:-100px;position:fixed;z-index:91;left:0;top:0;width:18px;height:18px;border:2px solid #fff9ec;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff9ec 0 10%,#f58a61 15%,#f15b2a 56%,#9f2d12 100%);box-shadow:0 0 0 7px rgba(241,91,42,.16),0 0 28px rgba(241,91,42,.85);pointer-events:none;transform:translate3d(calc(var(--x) - 50%),calc(var(--y) - 50%),0);transition:transform .06s linear;will-change:transform}
+/* z-index acima do modal do carrinho (99): o cursor nativo esta escondido,
+   entao a bolinha precisa aparecer por cima de qualquer camada, senao o
+   usuario fica sem cursor visivel dentro do modal. */
+.cursor-dot{--x:-100px;--y:-100px;position:fixed;z-index:200;left:0;top:0;width:18px;height:18px;border:2px solid #fff9ec;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff9ec 0 10%,#f58a61 15%,#f15b2a 56%,#9f2d12 100%);box-shadow:0 0 0 7px rgba(241,91,42,.16),0 0 28px rgba(241,91,42,.85);pointer-events:none;transform:translate3d(calc(var(--x) - 50%),calc(var(--y) - 50%),0);transition:transform .06s linear;will-change:transform}
 @media (pointer:fine){:global(body),:global(body *){cursor:none!important}}
 @media (pointer:coarse),(prefers-reduced-motion:reduce){.smoke-cursor,.cursor-dot{display:none}}
 </style>

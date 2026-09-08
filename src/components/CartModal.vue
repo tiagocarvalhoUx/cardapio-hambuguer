@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import Toastify from 'toastify-js'
-import 'toastify-js/src/toastify.css'
 import { useCart } from '@/composables/useCart'
-import { isRestaurantOpen } from '@/composables/useRestaurantOpen'
 
 defineProps<{ open: boolean }>()
 const emit = defineEmits<{ close: [] }>()
@@ -19,19 +16,8 @@ function onAddressInput() {
 }
 
 function checkout() {
-  if (!isRestaurantOpen()) {
-    Toastify({
-      text: 'Ops o Restaurante está fechado',
-      duration: 3000,
-      close: true,
-      gravity: 'top',
-      position: 'right',
-      stopOnFocus: true,
-      style: { background: '#ef4444' },
-    }).showToast()
-    return
-  }
-
+  // Pedido liberado em qualquer horario: o horario de funcionamento fica
+  // apenas como informacao no cabecalho, sem bloquear o envio.
   if (items.value.length === 0) return
 
   if (address.value === '') {
