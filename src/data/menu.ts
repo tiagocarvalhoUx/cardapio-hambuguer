@@ -15,7 +15,7 @@ export const burgers: Product[] = [
   { name: 'Parmegiana Smash', price: 33.9, image: photo('photo-1613514785940-daed07799d9b'), description: 'Smash 160g, muçarela, molho de tomate rústico e parmesão gratinado.' },
 ]
 export const drinks: Product[] = [
-  { name: 'Coca-Cola Lata', tag: 'REFRIGERANTE', price: 6, category: 'drink', image: photo('photo-1554866585-cd94860890b7'), description: '350 ml, bem gelada.' },
+  { name: 'Coca-Cola Lata', tag: 'REFRIGERANTE', price: 6, category: 'drink', image: local('coca-cola.webp'), description: '350 ml, bem gelada.' },
   { name: 'Guaraná Antarctica', tag: 'REFRIGERANTE', price: 6, category: 'drink', image: 'https://cdn.jsdelivr.net/gh/tiagocarvalhoUx/cardapio-hambuguer@master/public/assets/refri-2.webp', description: '350 ml, bem gelado.' },
   { name: 'Coca-Cola Zero', tag: 'REFRIGERANTE', price: 6, category: 'drink', image: local('coca-zero.webp'), description: '350 ml, sem açúcar e bem gelada.' },
   { name: 'H2OH! Limão', tag: 'REFRIGERANTE', price: 7, category: 'drink', image: local('h2o.webp'), description: '500 ml, leve e refrescante.' },
