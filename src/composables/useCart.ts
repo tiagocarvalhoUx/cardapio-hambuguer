@@ -10,6 +10,10 @@ export interface CartItem {
 // Estado compartilhado entre todos os componentes que usarem o composable
 const items = ref<CartItem[]>([])
 
+export function formatBRL(valor: number): string {
+  return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+}
+
 export function useCart() {
   const total = computed(() =>
     items.value.reduce((soma, item) => soma + item.price * item.quantity, 0),
@@ -18,9 +22,7 @@ export function useCart() {
   // Conta itens distintos, igual ao comportamento original do contador
   const count = computed(() => items.value.length)
 
-  const totalFormatado = computed(() =>
-    total.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
-  )
+  const totalFormatado = computed(() => formatBRL(total.value))
 
   function addToCart(product: Product) {
     const existente = items.value.find((item) => item.name === product.name)

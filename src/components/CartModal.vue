@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useCart } from '@/composables/useCart'
+import { formatBRL, useCart } from '@/composables/useCart'
 
 defineProps<{ open: boolean }>()
 const emit = defineEmits<{ close: [] }>()
@@ -25,13 +25,29 @@ function checkout() {
     return
   }
 
-  const cartItems = items.value
-    .map((item) => `${item.name} Quantidade:(${item.quantity}) Preço: R$${item.price} `)
-    .join('')
+  // Uma linha por item, com o preco unitario quando ha mais de uma unidade.
+  // Os asteriscos viram negrito no WhatsApp.
+  const linhas = items.value.map((item) => {
+    const subtotal = formatBRL(item.price * item.quantity)
+    const unitario = item.quantity > 1 ? ` (${formatBRL(item.price)} cada)` : ''
+    return `${item.quantity}x ${item.name}${unitario} - ${subtotal}`
+  })
 
-  const message = encodeURIComponent(cartItems)
+  const mensagem = [
+    '*NOVO PEDIDO - Ofertas Burger*',
+    '',
+    ...linhas,
+    '',
+    `*Total: ${totalFormatado.value}*`,
+    '',
+    '*Endereço de entrega:*',
+    address.value,
+  ].join('\n')
+
+  // encodeURIComponent na mensagem inteira: o endereco pode conter & ou #,
+  // que quebrariam a URL se ficassem de fora.
   window.open(
-    `https://wa.me/${WHATSAPP_PHONE}?text=${message} Endereço: ${address.value}`,
+    `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(mensagem)}`,
     '_blank',
   )
 
