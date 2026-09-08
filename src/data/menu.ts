@@ -1,5 +1,7 @@
 export interface Product { name: string; price: number; image: string; description?: string; tag?: string; category?: 'drink' }
 const photo = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1000&q=88`
+// Imagens servidas da pasta public/; BASE_URL cobre deploy em subpasta.
+const local = (arquivo: string) => `${import.meta.env.BASE_URL}assets/${arquivo}`
 export const burgers: Product[] = [
   { name: 'Classic Smash', tag: 'O MAIS PEDIDO', price: 24.9, image: photo('photo-1568901346375-23c9450c58cd'), description: '2 smash burgers, cheddar cremoso, picles e molho da casa.' },
   { name: 'Double Trouble', price: 32.9, image: photo('photo-1550547660-d9450f859349'), description: '2 carnes de 90g, bacon crocante, cheddar e cebola caramelizada.' },
@@ -16,9 +18,9 @@ export const drinks: Product[] = [
   { name: 'Coca-Cola Lata', tag: 'REFRIGERANTE', price: 6, category: 'drink', image: photo('photo-1554866585-cd94860890b7'), description: '350 ml, bem gelada.' },
   { name: 'Guaraná Antarctica', tag: 'REFRIGERANTE', price: 6, category: 'drink', image: 'https://cdn.jsdelivr.net/gh/tiagocarvalhoUx/cardapio-hambuguer@master/public/assets/refri-2.webp', description: '350 ml, bem gelado.' },
   { name: 'Coca-Cola Zero', tag: 'REFRIGERANTE', price: 6, category: 'drink', image: photo('photo-1554866585-cd94860890b7'), description: '350 ml, sem açúcar e bem gelada.' },
-  { name: 'H2OH! Limão', tag: 'REFRIGERANTE', price: 7, category: 'drink', image: photo('photo-1622543925917-763c34d1a86e'), description: '500 ml, leve e refrescante.' },
+  { name: 'H2OH! Limão', tag: 'REFRIGERANTE', price: 7, category: 'drink', image: local('h2o.webp'), description: '500 ml, leve e refrescante.' },
   { name: 'Suco de Laranja', tag: 'NATURAL', price: 10, category: 'drink', image: photo('photo-1613478223719-2ab802602423'), description: '300 ml, preparado na hora.' },
-  { name: 'Suco de Maracujá', tag: 'NATURAL', price: 10, category: 'drink', image: photo('photo-1621506289937-a8e4df240d0b'), description: '300 ml, cremoso e refrescante.' },
+  { name: 'Suco de Maracujá', tag: 'NATURAL', price: 10, category: 'drink', image: local('suco-maracuja.webp'), description: '300 ml, cremoso e refrescante.' },
   { name: 'Limonada da Casa', tag: 'ESPECIAL', price: 12, category: 'drink', image: photo('photo-1621263764928-df1444c5e859'), description: '400 ml, limão siciliano, hortelã e gelo.' },
   { name: 'Heineken Long Neck', tag: 'CERVEJA PREMIUM', price: 12, category: 'drink', image: photo('photo-1608270586620-248524c67de9'), description: '330 ml, puro malte e trincando.' },
   { name: 'Corona Extra', tag: 'CERVEJA PREMIUM', price: 13, category: 'drink', image: photo('photo-1674770637078-22980292371f'), description: '330 ml, com limão se quiser.' },
