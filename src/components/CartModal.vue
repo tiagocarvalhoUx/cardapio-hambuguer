@@ -63,10 +63,13 @@ function checkout() {
     class="bg-black/75 backdrop-blur-sm w-full h-full fixed top-0 left-0 z-[99] flex items-center justify-center p-4"
     @click.self="emit('close')"
   >
-    <div class="bg-[#fffaf0] text-[#181713] p-7 rounded-sm w-full max-w-[600px] border border-[#e8dfcf] shadow-2xl">
-      <div class="flex items-start justify-between mb-6"><div><p class="text-[#e95a2c] text-[10px] font-bold tracking-[.18em] mb-2">SEU PEDIDO</p><h2 class="font-['Barlow_Condensed'] uppercase font-black text-4xl leading-none">Meu carrinho</h2></div><button class="text-[#746c5e]" aria-label="Fechar carrinho" @click="emit('close')"><i class="fa-solid fa-xmark text-xl"></i></button></div>
+    <div class="cart-box bg-[#fffaf0] text-[#181713] rounded-sm w-full max-w-[600px] flex flex-col border border-[#e8dfcf] shadow-2xl">
+      <!-- Cabeçalho: sempre visível -->
+      <div class="flex items-start justify-between shrink-0 px-7 pt-7 pb-6"><div><p class="text-[#e95a2c] text-[10px] font-bold tracking-[.18em] mb-2">SEU PEDIDO</p><h2 class="font-['Barlow_Condensed'] uppercase font-black text-4xl leading-none">Meu carrinho</h2></div><button class="text-[#746c5e]" aria-label="Fechar carrinho" @click="emit('close')"><i class="fa-solid fa-xmark text-xl"></i></button></div>
 
-      <div class="flex justify-between mb-2 flex-col">
+      <!-- Só a lista rola: com pedido grande, endereço e botão continuam
+           alcançáveis. min-h-0 é o que permite o filho flex encolher. -->
+      <div class="flex-1 min-h-0 overflow-y-auto px-7">
         <div
           v-for="item in items"
           :key="item.name"
@@ -86,25 +89,37 @@ function checkout() {
         </div>
       </div>
 
-      <p class="font-bold border-t border-[#e8dfcf] pt-4">Total: <span>{{ totalFormatado }}</span></p>
+      <!-- Rodapé: sempre visível -->
+      <div class="shrink-0 px-7 pb-7 pt-4 border-t border-[#e8dfcf]">
+        <p class="font-bold">Total: <span>{{ totalFormatado }}</span></p>
 
-      <p class="font-bold mt-4">Endereço de entrega</p>
-      <input
-        v-model="address"
-        type="text"
-        placeholder="Digite seu endereço completo..."
-        class="w-full border border-[#d8cdbb] bg-white p-3 rounded-sm my-2 outline-none focus:border-[#e95a2c]"
-        :class="{ 'border-red-500': addressWarn }"
-        @input="onAddressInput"
-      />
-      <p v-if="addressWarn" class="text-red-500">Digite seu endereço completo!</p>
+        <p class="font-bold mt-4">Endereço de entrega</p>
+        <input
+          v-model="address"
+          type="text"
+          placeholder="Digite seu endereço completo..."
+          class="w-full border border-[#d8cdbb] bg-white p-3 rounded-sm my-2 outline-none focus:border-[#e95a2c]"
+          :class="{ 'border-red-500': addressWarn }"
+          @input="onAddressInput"
+        />
+        <p v-if="addressWarn" class="text-red-500">Digite seu endereço completo!</p>
 
-      <div class="flex items-center justify-between mt-5 w-full">
-        <button class="font-medium" @click="emit('close')">Fechar</button>
-        <button class="bg-[#f15b2a] text-[#181713] font-bold px-5 py-3 rounded-full" @click="checkout">
-          Finalizar Pedido
-        </button>
+        <div class="flex items-center justify-between mt-5 w-full">
+          <button class="font-medium" @click="emit('close')">Fechar</button>
+          <button class="bg-[#f15b2a] text-[#181713] font-bold px-5 py-3 rounded-full" @click="checkout">
+            Finalizar Pedido
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.cart-box {
+  max-height: 90vh;
+  /* dvh acompanha o teclado do celular: quando ele abre, o modal encolhe
+     junto e o campo de endereço continua visível. vh acima e o fallback. */
+  max-height: 90dvh;
+}
+</style>
